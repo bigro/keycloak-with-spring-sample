@@ -16,3 +16,7 @@
 2. [Client ID] に任意のクライアントID、 [Cleint Protocol] に `openid-connect` 、 [Root URL] にクライアントアプリのルートURLを入力する
 
 ![2018-11-07 20 08 28](https://user-images.githubusercontent.com/21081829/48128446-d4b90800-e2c9-11e8-9fa2-8321f2a99269.png)
+
+3. [Settings] タブで [Access Type] を `confidential` にする
+
+![2018-11-07 20 28 24](https://user-images.githubusercontent.com/21081829/48129102-e4d1e700-e2cb-11e8-91be-fbd51b67d3b2.png)
