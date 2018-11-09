@@ -9,6 +9,7 @@
 <h1>サンプルコンテンツ</h1>
 
 <p><span sec:authentication="name">ユーザー</span>さんログイン中</p>
+<p><span th:text="${point}">0</span>ポイント</p>
 
 <form action="login.html" th:action="@{/logout}" method="post">
     <input type="submit" value="ログアウト">
