@@ -7,5 +7,10 @@
 <body>
 <h1>Sampleログインページ</h1>
 <a th:href="@{/oauth2/authorization/sample}">Keycloakでログイン</a>
+
+<form action="login.html" th:action="@{/logout}" method="post">
+    <input type="submit" value="ログアウト">
+</form>
+
 </body>
 </html>

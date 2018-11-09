@@ -19,5 +19,4 @@ curl -v -X POST ${KEYCLOAK_URL}/auth/admin/realms/ \
 curl -v -X POST ${KEYCLOAK_URL}/auth/admin/realms/sample-app/clients \
     -H "Authorization: Bearer $ADMIN_TOKEN" \
     -H "Content-Type: application/json" \
-    --data '{"enabled":true,"attributes":{},"redirectUris":[],"clientId":"'${CLIENT}'","protocol":"openid-connect","rootUrl":"http://localhost:8080"}'
-
+    --data '{"enabled":true,"attributes":{},"redirectUris":[],"clientId":"'${CLIENT}'","protocol":"openid-connect","rootUrl":"http://localhost:8080","baseUrl":"http://localhost:8080/contents"}'
