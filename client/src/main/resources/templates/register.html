@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>アカウント登録</title>
+</head>
+<body>
+<h1>アカウント登録</h1>
+
+<form th:action="@{/account/confirm}" method="post">
+    <input type="text" name="email" title="email">
+    <input type="submit" value="登録">
+</form>
+
+</body>
+</html>
