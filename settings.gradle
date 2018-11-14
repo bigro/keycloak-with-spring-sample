@@ -1,1 +1,1 @@
-include 'client','resource'
+include 'client','resource','sample-account'
