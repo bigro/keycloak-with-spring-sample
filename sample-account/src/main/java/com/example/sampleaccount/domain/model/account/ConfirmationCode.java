@@ -4,7 +4,7 @@ public class ConfirmationCode {
     static final int LENGTH = 1000;
     String value;
 
-    private ConfirmationCode(String value) {
+    public ConfirmationCode(String value) {
         this.value = value;
     }
 

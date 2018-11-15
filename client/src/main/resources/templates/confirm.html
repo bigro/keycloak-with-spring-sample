@@ -2,13 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>アカウント登録確認画面</title>
+    <title>確認コード入力</title>
 </head>
 <body>
-<h1>アカウント登録確認画面</h1>
-<div th:object="${account}">
-    <p th:text="*{accountIdentifier}">account</p>
-</div>
+<h1>確認コード入力画面</h1>
+<form th:action="@{/account/auth}" method="post" th:object="${account}">
+    <input type="hidden" name="accountIdentifier" title="accountIdentifier" th:value="*{identifier().value()}">
+    <input type="hidden" name="mailAddress" title="mailAddress" th:value="*{mailAddress().value()}">
+    <input type="text" name="confirmationCode" title="confirmationCode">
+    <input type="submit" value="確認">
+</form>
 
 </body>
 </html>

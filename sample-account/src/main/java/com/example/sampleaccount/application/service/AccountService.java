@@ -1,9 +1,6 @@
 package com.example.sampleaccount.application.service;
 
-import com.example.sampleaccount.domain.model.account.AccountMailAddress;
-import com.example.sampleaccount.domain.model.account.AccountIdentifier;
-import com.example.sampleaccount.domain.model.account.AccountRepository;
-import com.example.sampleaccount.domain.model.account.ConfirmationCode;
+import com.example.sampleaccount.domain.model.account.*;
 import com.example.sampleaccount.infrastructure.mail.ConfirmationCodeMail;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +27,13 @@ public class AccountService {
 
     public AccountIdentifier newIdentifier() {
         return new AccountIdentifier(UUID.randomUUID().toString());
+    }
+
+    public AuthenticationStatus auth(AuthenticationKey authenticationKey) {
+        if (!repository.exists(authenticationKey)) {
+            return AuthenticationStatus.FAIL;
+        }
+        
+        return AuthenticationStatus.SUCCESS;
     }
 }

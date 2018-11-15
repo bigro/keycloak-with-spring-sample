@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/contents")
                 .permitAll();
         http.authorizeRequests()
-                .antMatchers("/account/register", "/account/confirm").permitAll()
+                .antMatchers("/account/register", "/account/confirm", "/account/auth", "/account/password").permitAll()
                 .anyRequest().authenticated();
         http.logout()
                 // 認可サーバーからもログアウトする
