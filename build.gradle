@@ -1,0 +1,21 @@
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath("org.postgresql:postgresql:42.1.1")
+		classpath("org.flywaydb:flyway-gradle-plugin:5.2.0")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'org.flywaydb.flyway'
+
+flyway {
+	url = "jdbc:postgresql://localhost:15432/account-database"
+	user = "testuser"
+	password = "abcdefg"
+	encoding = "UTF-8"
+	locations = ["filesystem:./sample-account/sql/"]
+	schemas = ['public', 'account']
+}

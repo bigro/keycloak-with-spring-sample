@@ -20,7 +20,7 @@ public class AccountController {
 
     @PostMapping("register")
     AccountRegisterResponse register(@RequestBody AccountRegisterRequest request) {
-        AccountIdentifier identifier = accountService.register(new AccountMailAddress());
+        AccountIdentifier identifier = accountService.register(new AccountMailAddress(request.email()));
         return new AccountRegisterResponse(identifier);
     }
 }
