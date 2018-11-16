@@ -1,10 +1,7 @@
 package com.example.client.presentation.controller;
 
 import com.example.client.application.service.AccountService;
-import com.example.client.domain.model.account.Account;
-import com.example.client.domain.model.account.AccountIdentifier;
-import com.example.client.domain.model.account.AccountMailAddress;
-import com.example.client.domain.model.account.ConfirmationCode;
+import com.example.client.domain.model.account.*;
 import com.example.client.domain.model.auth.AuthenticationStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,38 +24,66 @@ public class AccountController {
     }
 
     @PostMapping("confirm")
-    // TODO: 他がmailAddressなのにここだけemail
+        // TODO: 他がmailAddressなのにここだけemail
     String confirm(RedirectAttributes redirectAttributes, @RequestParam(name = "email") String email) {
-        Account account = service.register(email);
+        EntryAccount entryAccount = service.entry(email);
         // TODO:redirectAttributes.addAttributeにすると何故かエラーになる
-        redirectAttributes.addFlashAttribute("account", account);
-        
+        redirectAttributes.addFlashAttribute("entryAccount", entryAccount);
+
         return "redirect:/account/confirm";
     }
 
     @GetMapping("confirm")
         // TODO: 他がmailAddressなのにここだけemail
-    String confirm(@ModelAttribute Account account, Model model) {
-        model.addAttribute("account", account);
+    String confirm(@ModelAttribute EntryAccount entryAccount, Model model) {
+        model.addAttribute("entryAccount", entryAccount);
         return "confirm";
     }
 
     @PostMapping("auth")
-    String auth(Model model,
-                RedirectAttributes redirectAttributes,
+    String auth(RedirectAttributes redirectAttributes,
                 @RequestParam(name = "confirmationCode") String confirmationCode,
                 @RequestParam(name = "accountIdentifier") String accountIdentifier,
                 @RequestParam(name = "mailAddress") String mailAddress) {
         AuthenticationStatus status = service.auth(new AccountIdentifier(accountIdentifier), new ConfirmationCode(confirmationCode));
+        EntryAccount entryAccount = new EntryAccount(new AccountIdentifier(accountIdentifier), new AccountMailAddress(mailAddress));
 
         if (status.isFailed()) {
             // TODO: 認証できなかった旨のエラーメッセージを表示する
-            Account account = new Account(new AccountIdentifier(accountIdentifier), new AccountMailAddress(mailAddress));
-            redirectAttributes.addFlashAttribute("account", account);
+            redirectAttributes.addFlashAttribute("entryAccount", entryAccount);
             return "redirect:/account/confirm";
         }
 
-        model.addAttribute("mailAddress", mailAddress);
+        redirectAttributes.addFlashAttribute("entryAccount", entryAccount);
+        return "redirect:/account/password";
+    }
+
+    @GetMapping("password")
+    String password() {
         return "password";
+    }
+
+    @PostMapping("reset-password")
+    String resetPassword(@RequestParam(name = "identifier") String identifier,
+                         @RequestParam(name = "mailAddress") String mailAddress,
+                         @RequestParam(name = "password") String password,
+                         RedirectAttributes redirectAttributes,
+                         Model model) {
+        
+        AccountIdentifier accountIdentifier = new AccountIdentifier(identifier);
+        AccountMailAddress accountMailAddress = new AccountMailAddress(mailAddress);
+        ResetPasswordStatus status = service.resetPassword(
+                accountIdentifier,
+                accountMailAddress, 
+                new AccountPassword(password)
+        );
+
+        if (status.isFailed()) {
+            redirectAttributes.addFlashAttribute("entryAccount", new EntryAccount(accountIdentifier, accountMailAddress));
+            return "redirect:/account/password";
+        }
+
+        redirectAttributes.addFlashAttribute("identifier", identifier);
+        return "redirect:/member/register-profile";
     }
 }

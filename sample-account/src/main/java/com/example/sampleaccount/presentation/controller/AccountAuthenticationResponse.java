@@ -7,6 +7,10 @@ public class AccountAuthenticationResponse {
         this.status = status;
     }
 
+    public static AccountAuthenticationResponse success() {
+        return new AccountAuthenticationResponse("SUCCESS");
+    }
+
     public String getStatus() {
         return status;
     }

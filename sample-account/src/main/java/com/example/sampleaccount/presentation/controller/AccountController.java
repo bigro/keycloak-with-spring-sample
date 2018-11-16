@@ -1,10 +1,7 @@
 package com.example.sampleaccount.presentation.controller;
 
 import com.example.sampleaccount.application.service.AccountService;
-import com.example.sampleaccount.domain.model.account.AccountIdentifier;
-import com.example.sampleaccount.domain.model.account.AccountMailAddress;
-import com.example.sampleaccount.domain.model.account.AuthenticationKey;
-import com.example.sampleaccount.domain.model.account.AuthenticationStatus;
+import com.example.sampleaccount.domain.model.account.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +17,8 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @PostMapping("register")
-    AccountRegisterResponse register(@RequestBody AccountRegisterRequest request) {
+    @PostMapping("entry")
+    AccountRegisterResponse entry(@RequestBody AccountRegisterRequest request) {
         AccountIdentifier identifier = accountService.register(new AccountMailAddress(request.email()));
         return new AccountRegisterResponse(identifier);
     }
@@ -31,5 +28,12 @@ public class AccountController {
         AuthenticationKey authenticationKey = request.toKey();
         AuthenticationStatus status = accountService.auth(authenticationKey);
         return new AccountAuthenticationResponse(status.name());
+    }
+
+    @PostMapping("reset-password")
+    AccountAuthenticationResponse resetPassword(@RequestBody ResetPasswordRequest request) {
+        Account account = request.toAccount();
+        accountService.resetPassword(account);
+        return AccountAuthenticationResponse.success();
     }
 }

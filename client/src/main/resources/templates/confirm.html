@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>確認コード入力画面</h1>
-<form th:action="@{/account/auth}" method="post" th:object="${account}">
+<form th:action="@{/account/auth}" method="post" th:object="${entryAccount}">
     <input type="hidden" name="accountIdentifier" title="accountIdentifier" th:value="*{identifier().value()}">
     <input type="hidden" name="mailAddress" title="mailAddress" th:value="*{mailAddress().value()}">
     <input type="text" name="confirmationCode" title="confirmationCode">

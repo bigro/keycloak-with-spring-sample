@@ -4,4 +4,6 @@ public interface AccountRepository {
     void register(AccountIdentifier identifier, AccountMailAddress mailAddress, ConfirmationCode confirmationCode);
 
     boolean exists(AuthenticationKey authenticationKey);
+
+    void resetPassword(Account account);
 }

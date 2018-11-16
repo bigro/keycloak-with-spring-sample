@@ -17,6 +17,7 @@ public class AccountService {
     }
 
     public AccountIdentifier register(AccountMailAddress mailAddress) {
+        // TODO:すでにメールアドレスが登録されている場合を考慮する
         AccountIdentifier identifier = newIdentifier();
         ConfirmationCode confirmationCode = ConfirmationCode.issue();
         repository.register(identifier, mailAddress, confirmationCode);
@@ -35,5 +36,9 @@ public class AccountService {
         }
         
         return AuthenticationStatus.SUCCESS;
+    }
+
+    public void resetPassword(Account account) {
+        repository.resetPassword(account);
     }
 }

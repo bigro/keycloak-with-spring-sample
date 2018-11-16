@@ -1,12 +1,14 @@
-package com.example.client.domain.model.account;
+package com.example.sampleaccount.domain.model.account;
 
 public class Account {
     AccountIdentifier identifier;
     AccountMailAddress mailAddress;
+    AccountPassword password;
 
-    public Account(AccountIdentifier identifier, AccountMailAddress mailAddress) {
+    public Account(AccountIdentifier identifier, AccountMailAddress mailAddress, AccountPassword password) {
         this.identifier = identifier;
         this.mailAddress = mailAddress;
+        this.password = password;
     }
 
     public AccountIdentifier identifier() {
@@ -15,5 +17,9 @@ public class Account {
 
     public AccountMailAddress mailAddress() {
         return mailAddress;
+    }
+
+    public AccountPassword password() {
+        return password;
     }
 }

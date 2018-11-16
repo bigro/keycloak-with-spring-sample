@@ -28,4 +28,11 @@ public class AccountDatasource implements AccountRepository {
                 authenticationKey.identifier().value(), authenticationKey.confirmationCode().value());
         return count > 0;
     }
+
+    @Override
+    public void resetPassword(Account account) {
+        jdbcTemplate.update(
+                "insert into account.available_account (account_id, email, password) values (?, ?, ?)",
+                account.identifier().value(), account.mailAddress().value(), account.password().value());
+    }
 }

@@ -1,12 +1,11 @@
 package com.example.client.application.service;
 
-import com.example.client.domain.model.account.Account;
-import com.example.client.domain.model.account.AccountIdentifier;
-import com.example.client.domain.model.account.AccountMailAddress;
-import com.example.client.domain.model.account.ConfirmationCode;
+import com.example.client.domain.model.account.*;
 import com.example.client.domain.model.auth.AuthenticationStatus;
 import com.example.client.presentation.controller.AccountDto;
 import com.example.client.presentation.controller.AuthenticationResponse;
+import com.example.client.presentation.controller.ResetPasswordResponse;
+import com.example.client.presentation.controller.ResetPasswordStatus;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +23,13 @@ public class AccountService {
     }
 
 
-    public Account register(String email) {
+    public EntryAccount entry(String email) {
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("email", email);
 
         ResponseEntity<AccountDto> response = restTemplate.exchange(
-                 "http://localhost:8100/account/register",
+                 "http://localhost:8100/account/entry",
                 HttpMethod.POST,
                 new HttpEntity<>(map),
                 AccountDto.class);
@@ -39,7 +38,7 @@ public class AccountService {
         AccountDto accountDto = response.getBody();
 
         AccountIdentifier identifier = new AccountIdentifier(accountDto.getAccountIdentifier());
-        return new Account(identifier, new AccountMailAddress(email));
+        return new EntryAccount(identifier, new AccountMailAddress(email));
     }
 
     // TODO:「認証」ではないよな...
@@ -55,6 +54,21 @@ public class AccountService {
                 HttpMethod.POST,
                 new HttpEntity<>(map),
                 AuthenticationResponse.class);
+        return response.getBody().getStatus();
+    }
+
+    public ResetPasswordStatus resetPassword(AccountIdentifier identifier, AccountMailAddress mailAddress, AccountPassword password) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("identifier", identifier.value());
+        map.put("mailAddress", mailAddress.value());
+        map.put("password", password.value());
+
+        ResponseEntity<ResetPasswordResponse> response = restTemplate.exchange(
+                "http://localhost:8100/account/reset-password",
+                HttpMethod.POST,
+                new HttpEntity<>(map),
+                ResetPasswordResponse.class);
+        
         return response.getBody().getStatus();
     }
 }
