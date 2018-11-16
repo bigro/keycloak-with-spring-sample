@@ -44,6 +44,7 @@ public class AccountService {
 
     // TODO:「認証」ではないよな...
     // 登録の際にメールで送られてきた確認コードで確認？する（名前が思いつかない）
+    // でもワンタイムパスワードでの認証ってことになるのかな。。。
     public AuthenticationStatus auth(AccountIdentifier accountIdentifier, ConfirmationCode confirmationCode) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("accountIdentifier", accountIdentifier.value());

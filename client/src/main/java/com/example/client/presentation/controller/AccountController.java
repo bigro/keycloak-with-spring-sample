@@ -60,6 +60,5 @@ public class AccountController {
 
         model.addAttribute("mailAddress", mailAddress);
         return "password";
-
     }
 }
