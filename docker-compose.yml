@@ -8,6 +8,14 @@ services:
       POSTGRES_DB: account-database
     ports:
     - "15432:5432"
+  db-backend:
+    image: postgres:10-alpine
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: abcdefg
+      POSTGRES_DB: backend-database
+    ports:
+    - "25432:5432"
   keycloak:
     image: jboss/keycloak:4.5.0.Final
     environment:

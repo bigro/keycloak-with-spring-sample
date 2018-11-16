@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-./gradlew -i flywayClean flywayMigrate
+./gradlew -i sample-account:flywayClean sample-account:flywayMigrate
+./gradlew -i sample-backend:flywayClean sample-backend:flywayMigrate
