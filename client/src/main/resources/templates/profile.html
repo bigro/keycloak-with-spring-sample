@@ -7,8 +7,8 @@
 <body>
 <h1>プロフィール入力画面</h1>
 
-<form th:action="@{/account/reset-password}" method="post">
-    <input type="hidden" name="identifier" title="identifier" th:value="${identifier}">
+<form th:action="@{/member/register-profile}" method="post">
+    <input type="hidden" name="accountIdentifier" title="accountIdentifier" th:value="${identifier}">
     <input type="text" name="nickName" title="nickName">
     <input type="submit" value="登録">
 </form>

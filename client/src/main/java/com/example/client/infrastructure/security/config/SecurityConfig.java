@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/account/auth", 
                         "/account/password",
                         "/account/reset-password",
-                        "/member/register-profile"
+                        "/member/register-profile" //TODO:ほんとは認証するまで見せない
                 ).permitAll()
                 .anyRequest().authenticated();
         http.logout()
