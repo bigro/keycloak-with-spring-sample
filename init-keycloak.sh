@@ -13,17 +13,30 @@ ADMIN_TOKEN=$(curl -X POST ${KEYCLOAK_URL}/auth/realms/master/protocol/openid-co
 curl -v -X POST ${KEYCLOAK_URL}/auth/admin/realms/ \
     -H "Authorization: Bearer $ADMIN_TOKEN" \
     -H "Content-Type: application/json"  \
-    --data '{"id":"'${REALM}'", "realm":"'${REALM}'", "enabled": true}'
+    --data '{
+         "realm":"'${REALM}'",
+         "enabled":true,
+         "registrationAllowed":true,
+         "registrationEmailAsUsername":true,
+         "resetPasswordAllowed":true,
+         "verifyEmail":true,
+         "smtpServer":{
+           "host":"mailhog",
+           "from":"test@example.com"
+         }
+     }'
 
 # client登録
 curl -v -X POST ${KEYCLOAK_URL}/auth/admin/realms/sample-app/clients \
     -H "Authorization: Bearer $ADMIN_TOKEN" \
     -H "Content-Type: application/json" \
-    --data '{"enabled":true,"attributes":{},"redirectUris":[],"clientId":"'${CLIENT}'","protocol":"openid-connect","rootUrl":"http://localhost:8080","baseUrl":"http://localhost:8080/contents"}'
-
-
-# 登録時のメール確認を有効にする
-curl -v -X PUT ${KEYCLOAK_URL}/auth/admin/realms/sample-app/authentication/required-actions/VERIFY_EMAIL \
-    -H "Authorization: Bearer $ADMIN_TOKEN" \
-    -H "Content-Type: application/json"  \
-    --data '{"alias":"VERIFY_EMAIL", "config":{}, "defaultAction":true, "enabled":true, "name":"Verify Email", "priority":50}'
+    --data '{
+        "enabled":true,
+        "publicClient":false,
+        "attributes":{},
+        "redirectUris":[],
+        "clientId":"'${CLIENT}'"
+        ,"protocol":"openid-connect",
+        "rootUrl":"http://localhost:8080",
+        "baseUrl":"http://localhost:8080/contents"
+    }'
